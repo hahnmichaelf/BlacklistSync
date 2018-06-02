@@ -1,0 +1,10 @@
+node_modules/
+
+
+data/blacklist.json
+data/eal.json
+data/esdb.yaml
+data/mm-epd.json
+data/writeeal.json
+data/writemm-epd.json
+data/writeesdb.json
