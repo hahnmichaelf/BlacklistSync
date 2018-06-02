@@ -1,0 +1,98 @@
+.ui.body.container {
+  padding-top: 7em;
+  min-height: 700px;
+  padding-bottom: 7%;
+}
+
+.ui.fixed.inverted.menu {
+  height: 55px;
+}
+
+.item {
+  padding-top: .2em;
+  margin-left: .1em;
+}
+
+.ui.footer {
+  position: absolute;
+  left: 0;
+  right: 0;
+  height: 45px;
+  margin-top: -45px !important;
+  text-align: center;
+  width: 100%;
+}
+
+
+/* home */
+h2 {
+  margin-bottom: 0 !important;
+  padding-bottom: .5em !important;
+}
+
+.centered.column {
+  padding-bottom: 4%;
+  text-align: center !important;
+}
+
+#items {
+  margin-top: 8% !important;
+
+}
+
+.title {
+  text-align: center;
+  padding-top: 5%;
+  font-size: 50px;
+  margin-top: 25%;
+}
+
+#github,#scams,#report,#donate {
+	cursor: pointer;
+}
+.containindex {
+  height: 100%;
+  margin-top: 15%;
+
+}
+
+/* links */
+a {
+  color: inherit;
+}
+
+/* web3 data grab */
+.center {
+  text-align: center !important;
+}
+
+#info {
+  width: 10px;
+}
+
+.activ {
+	color: green;
+	font-weight: bold;
+}
+
+.offline {
+	color: red;
+	font-weight: bold;
+}
+
+.suspended {
+	color: orange;
+	font-weight: bold;
+}
+
+.unknown {
+	color: gray;
+	font-weight: bold;
+}
+
+.subcategoryicon {
+	vertical-align: middle;
+	margin-right: 6px;
+	width: 16px;
+	height: 16px;
+}

@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <title>BlacklistSync</title>
+    <meta property="og:title" content="BlacklistSync" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.2.11/semantic.min.css" integrity="sha256-g4+HzlttFiqgeuCnx3m308o0ahuBZ+0CRxaRWfSL0BU=" crossorigin="anonymous" />
+    <link rel="stylesheet" type="text/html" href="/css/general.css">
+    <meta http-equiv="content-type" content="text/html;charset=UTF-8">
+    <script src="bower_components/web3/dist/web3.min.js" type="text/html"></script>
+
+</head>
+
+<body style="height: 100%;">
+    <div class="ui fixed inverted menu" style="height: 55px;" id="menu">
+        <div class="ui container">
+            <a href="/" class="item">
+                <i class="home icon"></i> Home
+            </a>
+            <a href="/about" class="item">
+                <i class="help circle icon"></i> About
+            </a><!--
+            <a href="/blacklist" class="item">
+                <i class="protect icon"></i> Blacklist
+            </a> -->
+        </div>
+    </div>
+
+    <!-- BODY CONTAINER -->
+    <div class="ui body container" style="height: 100%;">
+        {{ content }}
+    </div>
+
+    <!-- FOOTER -->
+    <div class="ui inverted vertical footer segment" style="height: 55px;">
+        <div class="ui container">
+            <div class="ui horizontal inverted small divided link list">
+                <div class="item"><div style="color:white"><a href="https://github.com/hahnmichaelf/">BlacklistSync</a></div><br> Created by <a target="_blank" href="https://mycrypto.com">MyCrypto</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</body>
+
+</html>

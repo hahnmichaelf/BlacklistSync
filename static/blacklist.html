@@ -1,0 +1,72 @@
+
+<h1 class="canaries" style="margin-top: 15%;"><i class="protect icon"></i> Canaries</h1>
+<table class="ui sortable celled table">
+  <thead>
+    <tr>
+      <th>Canary Address</th>
+	    <th>Canary Name</th>
+	    <th>Canary Status</th>
+    </tr>
+  </thead>
+  <tbody>
+    <!-- Insert Canaries here  -->
+    {{ table }}
+    <!-- Insert Canaries here  -->
+  </tbody>
+</table>
+
+
+<script>
+    let web3 = new Web3(new Web3.providers.HttpProvider("https://ropsten.infura.io/BvLrFkkpvJn7LSt3EUUz")); //0bk4sH3hzNF4uwIOygAU
+    let account = '';
+    var contractAddress = '0x0849C22E4BFbE4CF7d7D21E4B0A5de33836d7D56';
+    var abi = [{"constant":true,"inputs":[{"name":"_address","type":"address"}],"name":"getCanaryNameByAddress","outputs":[{"name":"","type":"bytes32"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":false,"inputs":[{"name":"_name","type":"bytes32"}],"name":"initCanary","outputs":[{"name":"","type":"bool"}],"payable":false,"stateMutability":"nonpayable","type":"function"},{"constant":false,"inputs":[],"name":"pingCanary","outputs":[],"payable":true,"stateMutability":"payable","type":"function"},{"constant":true,"inputs":[{"name":"_address","type":"address"}],"name":"getCanaryLastBlockPing","outputs":[{"name":"","type":"uint256"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":true,"inputs":[{"name":"_address","type":"address"}],"name":"isCanaryAlive","outputs":[{"name":"","type":"bool"}],"payable":false,"stateMutability":"view","type":"function"}];
+
+    let contract = web3.eth.contract(abi).at(contractAddress);
+    //console.log(contract.address());
+    web3.eth.defaultAccount = account;
+
+    web3.eth.getAccounts(function(err, accs) {
+        if (err != null) {
+            alert("There was an error fetching your accounts.");
+            return;
+        }
+
+        if (accs.length == 0) {
+            console.log("No accounts found!");
+            return;
+        }
+
+        accounts = accs;
+        account = accounts[0];
+        console.log("Account: "+ account);
+        //document.querySelector('form#check_canary_status input').value = account;
+    });
+    /*
+    let canaries = [
+      "0x45b240e96c4b39c7bc62893b8ae4f20f29cf2d80",
+      "0x0bda834163fcc10fdbcd3944cc9834e77ea31207"
+    ];*/
+    window.onload = function(){
+    //canaries.forEach(function(c) {
+    element = document.querySelector('td#add0x45b240e96c4b39c7bc62893b8ae4f20f29cf2d80');
+    if(element != null) {
+      //console.log('clear!!!');
+      var canaryaddress = element.innerText;
+      //console.log(canaryaddress + " is queried Canary.");
+      if(contract.isCanaryAlive("0x0849C22E4BFbE4CF7d7D21E4B0A5de33836d7D56")){
+        document.getElementById('add0x45b240e96c4b39c7bc62893b8ae4f20f29cf2d80').innerText = "Canary is alive";
+      }
+      else{
+        document.getElementById('add0x45b240e96c4b39c7bc62893b8ae4f20f29cf2d80').innerText = "Canary is Dead af.";
+      }
+      //var lastblock = contract.getCanaryLastBlockPing(canaryaddress);
+      //document.getElementById('lastblock0x45b240e96c4b39c7bc62893b8ae4f20f29cf2d80').innerText = lastblock;
+    }
+      /*
+      console.log("Canary: 0x45b240e96c4b39c7bc62893b8ae4f20f29cf2d80");
+      contract.isCanaryAlive('0x45b240e96c4b39c7bc62893b8ae4f20f29cf2d80')
+        .then(console.log("true"));*/
+    //});
+  };
+</script>
