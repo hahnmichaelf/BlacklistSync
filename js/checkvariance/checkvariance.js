@@ -5,13 +5,17 @@ const async = require('async');
 const getDateTime = require('./../../js/utils/getDateTime.js');
 const filter = require('./../../lists/filter.json');
 
+var mmepdneeded;
+var ealneeded;
+var esdbneeded;
+
 function checkmmepd(){
   var blacklist = JSON.parse(fs.readFileSync('./data/blacklist.json'));
   var mmepd = JSON.parse(fs.readFileSync('./data/mm-epd.json'));
   var mmepdneeds = require('./../../data/writemm-epd.json');
   var search = require('./../utils/search.js');
   var currlength = mmepdneeds.length;
-  var neededcount = 0;
+  var mmepdneeded = 0;
   async.series([
     function(callback){
       for(var i = 0; i <= blacklist.length; i++){
@@ -20,23 +24,24 @@ function checkmmepd(){
         }
         if(search(blacklist[i], mmepd.blacklist) == false){
           if(search(blacklist[i], mmepdneeds) == false){
-            neededcount = neededcount + 1;
+            mmepdneeded = mmepdneeded + 1;
             mmepdneeds.push(blacklist[i]);
           }
-          // else - already found in mmepdneeds. do nothing
         }
       }
-      if(neededcount != 0){
-        console.log(getDateTime() + neededcount + " domains are missing from mmepd");
+      if(mmepdneeded != 0){
+        console.log(getDateTime() + mmepdneeded + " domains are missing from mmepd.");
       }
       callback();
     },
     function(callback){
-      fs.writeFileSync('./data/writemm-epd.json', JSON.stringify(mmepdneeds, null, 2), 'utf8', function(err,results){
-        if(err) console.log(err);
-        fs.close();
-        callback();
-      });
+      if(mmepdneeded != 0){
+        fs.writeFileSync('./data/writemm-epd.json', JSON.stringify(mmepdneeds, null, 2), 'utf8', function(err,results){
+          if(err) console.log(err);
+          fs.close();
+          callback();
+        });
+      }
     }
   ],
     function(err,results){
@@ -53,7 +58,7 @@ function checkeal(){
   var ealneeds = require('./../../data/writeeal.json');
   var currlength = ealneeds.length;
   var search = require('./../utils/search.js');
-  var neededcount = 0;
+  var ealneeded = 0;
   async.series([
     function(callback){
       for(var i = 0; i <= blacklist.length; i++){
@@ -62,23 +67,24 @@ function checkeal(){
         }
         if(search(blacklist[i], eal) == false){
           if(search(blacklist[i], ealneeds) == false){
-            neededcount = neededcount + 1;
+            ealneeded = ealneeded + 1;
             ealneeds.push(blacklist[i]);
           }
-          // Else - already found in mmepdneeds. Do nothing
         }
       }
-      if(neededcount != 0){
-        console.log(getDateTime() + neededcount + " domains are missing from eal");
+      if(ealneeded != 0){
+        console.log(getDateTime() + ealneeded + " domains are missing from eal.");
       }
       callback();
     },
     function(callback){
-      fs.writeFileSync('./data/writeeal.json', JSON.stringify(ealneeds, null, 2), 'utf8', function(err,results){
-        if(err) console.log(err);
-        fs.close();
-        callback();
-      });
+      if(ealneeded != 0){
+        fs.writeFileSync('./data/writeeal.json', JSON.stringify(ealneeds, null, 2), 'utf8', function(err,results){
+          if(err) console.log(err);
+          fs.close();
+          callback();
+        });
+      }
     }
   ],
     function(err,results){
@@ -96,7 +102,7 @@ function checkesdb(){
   var esdbneeds = require('./../../data/writeesdb.json');
   var currlength = esdbneeds.length;
   var search = require('./../utils/search.js');
-  var neededcount = 0;
+  var esdbneeded = 0;
   async.series([
     function(callback){
       domains.forEach(function(scam, index) {
@@ -105,6 +111,7 @@ function checkesdb(){
                                 .replace('[.]','.')
                                 .replace(' ', '/n')
                                 .replace('www.','')
+                                .replace('mailto:')
                                 .split(/[/?#]/)[0];
         if(search(scamurl, filter) == true){
           // Do nothing
@@ -123,23 +130,25 @@ function checkesdb(){
         }
         if(search(blacklist[i], esdb) == false){
           if(search(blacklist[i], esdbneeds) == false){
-            neededcount = neededcount + 1;
+            esdbneeded = esdbneeded + 1;
             esdbneeds.push(blacklist[i]);
           }
           // Else - already found in esdbneeds. Do nothing
         }
       }
-      if(neededcount != 0){
-        console.log(getDateTime() + neededcount + " domains are missing from esdb");
+      if(esdbneeded != 0){
+        console.log(getDateTime() + esdbneeded + " domains are missing from esdb.");
       }
       callback();
     },
     function(callback){
-      fs.writeFileSync('./data/writeesdb.json', JSON.stringify(esdbneeds, null, 2), 'utf8', function(err,results){
-        if(err) console.log(err);
-        fs.close();
-        callback();
-      });
+      if(esdbneeded != 0){
+        fs.writeFileSync('./data/writeesdb.json', JSON.stringify(esdbneeds, null, 2), 'utf8', function(err,results){
+          if(err) console.log(err);
+          fs.close();
+          callback();
+        });
+      }
     }
   ],
     function(err,results){

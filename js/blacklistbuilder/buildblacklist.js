@@ -1,12 +1,15 @@
-var fs = require('fs');
-var fsEight = require('fs');
+const fs = require('fs');
+const fsEight = require('fs');
 const yaml = require('js-yaml');
-var json = require('json');
+const json = require('json');
 const async = require('async');
-var exec = require('child_process').exec;
-var createblacklist = require('./createblacklist.js');
+const exec = require('child_process').exec;
+const createblacklist = require('./createblacklist.js');
 const getDateTime = require('./../../js/utils/getDateTime.js');
 const filter = require('./../../lists/filter.json');
+
+var isJson = require('./../../js/utils/isJson.js')
+
 var blacklistlengthquery = 0;
 var count = 0;
 var counttwo = 0;
@@ -16,10 +19,39 @@ var ealmergestatus = false;
 
 /* Start mmepd merge */
 function mmepdmerge(){
-  var mmepdjson = JSON.parse(fs.readFileSync('./data/mm-epd.json'));
-  var search = require('./../utils/search.js');
-  var blist = require('./../../data/blacklist');
+  var mmepdjson;
+  var search;
+  var blist;
   async.series([
+    function(callback){
+      if(fs.existsSync('./data/mm-epd.json')) {
+        mmepdjson = JSON.parse(fs.readFileSync('./data/mm-epd.json'));
+        search = require('./../utils/search.js');
+        blist = require('./../../data/blacklist');
+        setTimeout( function(){
+            callback();
+        }, 3*1000);
+      }
+      else{
+        setTimeout(
+          function(){
+            var intOne = setInterval(
+              function(){
+                if(fs.existsSync('./data/mm-epd.json')) {
+                  mmepdjson = JSON.parse(fs.readFileSync('./data/mm-epd.json'));
+                  search = require('./../utils/search.js');
+                  blist = require('./../../data/blacklist');
+                  clearInterval(intOne);
+                  setTimeout( function(){
+                      callback();
+                  }, 3*1000);
+                }
+              }, 3*1000
+            );
+          }, 3*1000
+        );
+      };
+    },
     function(callback){
       var newblacklistitems = 0;
       for(var c = 0; c <= mmepdjson.blacklist.length; c++) {
@@ -57,10 +89,40 @@ function mmepdmerge(){
 /* End mmepd merge*/
 /* Start eal merge */
 function ealmerge(){
-  var ealjson = JSON.parse(fs.readFileSync('./data/eal.json'));
-  var search = require('./../utils/search.js');
-  var blist = require('./../../data/blacklist');
+  var ealjson;
+  var search;
+  var blist;
   async.series([
+    function(callback){
+      if(fs.existsSync('./data/eal.json')) {
+        ealjson = JSON.parse(fs.readFileSync('./data/eal.json'));
+        search = require('./../utils/search.js');
+        blist = require('./../../data/blacklist');
+        setTimeout( function(){
+            callback();
+        }, 3*1000);
+      }
+      else{
+        setTimeout(
+          function(){
+            var intTwo = setInterval(
+              function(){
+                if(fs.existsSync('./data/eal.json')) {
+                  ealjson = JSON.parse(fs.readFileSync('./data/eal.json'));
+                  search = require('./../utils/search.js');
+                  blist = require('./../../data/blacklist');
+                  clearInterval(intTwo);
+                  setTimeout( function(){
+                      callback();
+                  }, 3*1000);
+                }
+
+              }, 3*1000
+            );
+          }, 3*1000
+        );
+      };
+    },
     function(callback){
       var newblacklistitems = 0;
       for(var c = 0; c <= ealjson.length; c++) {
@@ -98,10 +160,39 @@ function ealmerge(){
 /* End eal merge*/
 /* Start esdb merge */
 function esdbmerge(){
-  let esdbscams = yaml.safeLoad(fs.readFileSync('./data/esdb.yaml'));
-  var search = require('./../utils/search.js');
-  var blist = require('./../../data/blacklist');
+  var esdbscams;
+  var search;
+  var blist;
   async.series([
+    function(callback){
+      if(fs.readFileSync('./data/esdb.yaml')){
+        esdbscams = yaml.safeLoad(fs.readFileSync('./data/esdb.yaml'));
+        search = require('./../utils/search.js');
+        blist = require('./../../data/blacklist');
+        setTimeout( function(){
+            callback();
+        }, 3*1000);
+      }
+      else{
+        setTimeout(
+          function(){
+            var intThree = setInterval(
+              function(){
+                if(fs.readFileSync('./data/esdb.yaml')){
+                  esdbscams = yaml.safeLoad(fs.readFileSync('./data/esdb.yaml'));
+                  search = require('./../utils/search.js');
+                  blist = require('./../../data/blacklist');
+                  clearInterval(intThree);
+                  setTimeout( function(){
+                      callback();
+                  }, 3*1000);
+                }
+              }, 3*1000
+            );
+          }, 3*1000
+        );
+      };
+    },
     function(callback){
       var newblacklistitems = 0;
       esdbscams.forEach(function(scam, index) {
