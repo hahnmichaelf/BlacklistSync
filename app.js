@@ -157,6 +157,6 @@ function begin(){
     else{
 
     }
-  }, 1*60*1000); // Time to check and restart process - Every 3 minutes.
+  }, 3*60*1000); // Time to check and restart process - Every 3 minutes.
 }
 begin();
